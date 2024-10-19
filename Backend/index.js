@@ -1,10 +1,14 @@
 // server.js
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { body, validationResult } = require('express-validator');
 const db = require('./db');
 
 const app = express();
+
+app.use(cors());
+
 const PORT = 8080;
 
 // Middleware to parse JSON request body
@@ -81,6 +85,36 @@ app.get('/api/therapists', (req, res) => {
       console.error('Error fetching therapists:', error);
       return res.status(500).json({ error: 'Error fetching therapists' });
     }
+    res.status(200).json(results);
+  });
+});
+
+// API endpoint to fetch all appointments for a specific therapist by id
+app.get('/api/therapists/:id/appointments', (req, res) => {
+  const therapistId = req.params.id; // Get the therapist ID from the URL parameters
+
+  // Query to fetch appointments related to a specific therapist
+  const query = `
+    SELECT a.id AS appointment_id, u.name AS user_name, t.name AS therapist_name, 
+           a.booking_completion_time, a.selected_slot
+    FROM appointments a
+    INNER JOIN users u ON a.user_id = u.id
+    INNER JOIN therapists t ON a.therapist_id = t.id
+    WHERE t.id = ?
+  `;
+
+  // Execute the query
+  db.query(query, [therapistId], (error, results) => {
+    if (error) {
+      console.error('Error fetching appointments for therapist:', error);
+      return res.status(500).json({ error: 'Error fetching appointments' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'No appointments found for this therapist' });
+    }
+
+    // Return the appointments data
     res.status(200).json(results);
   });
 });
