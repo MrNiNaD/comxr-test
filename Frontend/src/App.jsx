@@ -9,8 +9,10 @@ import Renderer from "./component/Renderer";
 const App = () => {
   const [state, setState] = useState({ body: {} });
 
+  const setInBluk = (obj) => setState((prev) => ({ ...prev, ...obj }));
+
   return (
-    <MyContext.Provider value={{ setState, state }}>
+    <MyContext.Provider value={{ setState, state, setInBluk }}>
       <section>
         <Topbar />
         <Renderer />

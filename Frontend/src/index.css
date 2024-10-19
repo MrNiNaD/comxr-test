@@ -51,11 +51,14 @@ table {
 .remove-button-styling {
   background: none;
   border: none;
+  padding: 0;
 }
 
 html {
   box-sizing: border-box;
   --primary: #fe8235;
+  --secondary: #2C3776;
+
 }
 
 .top-bar {
@@ -94,7 +97,7 @@ html {
 }
 
 .label-style {
-  font-size: 10px;
+  font-size: 12px;
   display: block;
   margin-top: 10px;
 }
@@ -122,4 +125,66 @@ html {
   padding: 10px 20px;
   margin: 0 auto;
   margin-top: 10px;
+}
+
+.scheduler-page {
+  padding: 0 20px;
+}
+
+.schedule-heading {
+  font-size: 15px;
+}
+
+.schedule-heading span {
+  display: block;
+  color: var(--secondary);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.schedule-heading span.two {
+  font-size: 17px;
+}
+
+.select-therepist {
+  font-size: 18px;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.therapist-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  max-width: 400px;
+}
+
+.therapist-btn {
+  display: flex;
+  width: 49%;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dr-data {
+  display: block;
+  padding: 10px;
+  flex: 1;
+}
+
+.dr-data span {
+  display: block;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.dr-name, .dr-availability {
+  font-size: 15px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.dr-availability {
+  font-size: 14px;
+  font-weight: 400;
 }
