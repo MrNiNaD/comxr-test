@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Hero from "../assets/hero.jpg";
 import { MyContext } from "../context";
+import { toast } from "react-toastify";
 
 const UserForm = () => {
   const { state, setState } = useContext(MyContext);
@@ -22,6 +23,19 @@ const UserForm = () => {
     }));
   };
 
+  const onSubmit = () => {
+    for (let i = 0; i < config.length; i++) {
+      const eachConfig = config?.[i];
+
+      if (!state.body?.[eachConfig?.key]) {
+        toast.error(`${eachConfig?.label} should not be empty.`);
+        return;
+      }
+    }
+
+    setState((prev) => ({ ...prev, mode: "2" }));
+  };
+
   return (
     <div className="user-form">
       <img className="hero" src={Hero} />
@@ -39,11 +53,14 @@ const UserForm = () => {
                   onChange={fieldChange}
                   className="field-style"
                   name={eachConfig?.key}
+                  value={state?.body?.[eachConfig?.key] ?? ""}
                 />
               </div>
             );
           })}
-          <button className="btn-style">Proceed</button>
+          <button onClick={onSubmit} className="btn-style">
+            Proceed
+          </button>
         </form>
       </div>
     </div>

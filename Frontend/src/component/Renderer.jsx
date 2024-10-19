@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import UserForm from "./UserForm";
+import Scheduler from "./Scheduler";
+import { MyContext } from "../context";
 
 const Renderer = () => {
-  switch (false) {
-    case "":
-      return <p>Test</p>;
+  const { state } = useContext(MyContext);
+
+  switch (state?.mode) {
+    case "2":
+      return <Scheduler />;
 
     default:
       return <UserForm />;
