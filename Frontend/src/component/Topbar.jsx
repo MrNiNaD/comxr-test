@@ -1,15 +1,10 @@
 import React from "react";
 import Arrow from "../assets/arrow.png";
-import { toast } from "react-toastify";
 
 const Topbar = () => {
   return (
     <div className="top-bar">
-      <button
-        onClick={() => {
-          toast.error("Error Notification !");
-        }}
-      >
+      <button className="remove-button-styling">
         <img src={Arrow} />
       </button>
     </div>
