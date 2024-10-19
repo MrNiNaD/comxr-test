@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator');
 const db = require('./db');
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 // Middleware to parse JSON request body
 app.use(bodyParser.json());
@@ -32,43 +32,43 @@ app.post('/api/appointments',
     const { name, mobile, city, pincode, address, therapistId, bookingTime, slotTime } = req.body;
 
     // Start a transaction
-  db.beginTransaction((err) => {
-        if (err) {
-          return res.status(500).json({ error: 'Transaction error' });
-        }
-
-        // Step 1: Insert a new user
-        const userQuery = 'INSERT INTO users (name, mobile, city, pincode, address) VALUES (?, ?, ?, ?, ?)';
-    db.query(userQuery, [name, mobile, city, pincode, address], (err, userResult) => {
+    db.beginTransaction((err) => {
           if (err) {
-        return db.rollback(() => {
-              res.status(500).json({ error: 'Error inserting user' });
-            });
+            return res.status(500).json({ error: 'Transaction error' });
           }
 
-          // Step 2: Insert a new appointment for the new user
-          const appointmentQuery = 'INSERT INTO appointments (user_id, therapist_id, booking_completion_time, selected_slot) VALUES (?, ?, ?, ?)';
-          const userId = userResult.insertId; // Get the last inserted user ID
-
-      db.query(appointmentQuery, [userId, therapistId, bookingTime, slotTime], (err) => {
+          // Step 1: Insert a new user
+          const userQuery = 'INSERT INTO users (name, mobile, city, pincode, address) VALUES (?, ?, ?, ?, ?)';
+      db.query(userQuery, [name, mobile, city, pincode, address], (err, userResult) => {
             if (err) {
           return db.rollback(() => {
-                res.status(500).json({ error: 'Error inserting appointment' });
+                res.status(500).json({ error: 'Error inserting user' });
               });
             }
 
-            // Commit the transaction
-        db.commit((err) => {
+            // Step 2: Insert a new appointment for the new user
+            const appointmentQuery = 'INSERT INTO appointments (user_id, therapist_id, booking_completion_time, selected_slot) VALUES (?, ?, ?, ?)';
+            const userId = userResult.insertId; // Get the last inserted user ID
+
+        db.query(appointmentQuery, [userId, therapistId, bookingTime, slotTime], (err) => {
               if (err) {
             return db.rollback(() => {
-                  res.status(500).json({ error: 'Transaction commit error' });
+                  res.status(500).json({ error: 'Error inserting appointment' });
                 });
               }
-              res.status(201).json({ message: 'User and appointment created successfully' });
+
+              // Commit the transaction
+          db.commit((err) => {
+                if (err) {
+              return db.rollback(() => {
+                    res.status(500).json({ error: 'Transaction commit error' });
+                  });
+                }
+                res.status(201).json({ message: 'User and appointment created successfully' });
+            });
           });
         });
       });
-    });
   });
 
 // API endpoint to fetch therapists
