@@ -54,6 +54,7 @@ table {
 }
 
 html {
+  box-sizing: border-box;
   --primary: #fe8235;
 }
 
@@ -77,17 +78,48 @@ html {
   position: relative;
   top: -47px;
   height: 500px;
+  padding: 0 20px;
 }
 
 .form-container h3 {
   padding-top: 25px;
-  width: 90%;
   margin: 0 auto;
+  width: fit-content;
   font-size: 17px;
   font-weight: 600;
-  text-align: center;
 }
 
 .form-container h3 span {
   color: var(--primary);
+}
+
+.label-style {
+  font-size: 10px;
+  display: block;
+  margin-top: 10px;
+}
+
+.form-container form {
+  margin-top: 15px;
+}
+
+.field-style {
+  margin-top: 5px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 10px;
+  width: 100%;
+  max-width: 95%;
+  display: block;
+}
+
+.btn-style {
+  background: var(--primary);
+  display: block;
+  border-radius: 10px;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 auto;
+  margin-top: 10px;
 }

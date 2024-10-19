@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Renderer from "./component/Renderer";
 
 const App = () => {
-  const [state, setState] = useState();
+  const [state, setState] = useState({ body: {} });
 
   return (
     <MyContext.Provider value={{ setState, state }}>
