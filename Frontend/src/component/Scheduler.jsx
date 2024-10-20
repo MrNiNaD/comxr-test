@@ -3,6 +3,8 @@ import { MyContext } from "../context";
 import axios from "axios";
 import Therapist from "../assets/therapist.png";
 import Loader from "./Loader";
+import SchedulerTop from "./SchedulerTop";
+import SchedulingDetail from "./SchedulingDetail";
 
 const Scheduler = () => {
   const { state, setInBluk } = useContext(MyContext);
@@ -30,11 +32,8 @@ const Scheduler = () => {
 
   return (
     <div className="scheduler-page">
-      <h2 className="schedule-heading">
-        <span className="one">Book an appointment with</span>
-        <span className="two">Physica Physiotherapy</span>
-      </h2>
-      {Array.isArray(state?.therapist) && (
+      <SchedulerTop />
+      {Array.isArray(state?.therapist) ? (
         <>
           <h3 className="select-therepist">Select A Therapist</h3>
           <div className="therapist-container">
@@ -53,7 +52,15 @@ const Scheduler = () => {
               );
             })}
           </div>
+
+          <SchedulingDetail />
+
+          <h3 className="select-therepist">Select A Date</h3>
         </>
+      ) : (
+        <h2 className="schedule-heading no-data">
+          <span>No Data Found</span>
+        </h2>
       )}
     </div>
   );
