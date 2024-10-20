@@ -2,9 +2,10 @@ import React, { useContext, useEffect } from "react";
 import { MyContext } from "../context";
 import axios from "axios";
 import Therapist from "../assets/therapist.png";
+import Loader from "./Loader";
 
 const Scheduler = () => {
-  const { state, setState, setInBluk } = useContext(MyContext);
+  const { state, setInBluk } = useContext(MyContext);
 
   const fetchTherapist = async () => {
     setInBluk({ loading: true });
@@ -24,7 +25,7 @@ const Scheduler = () => {
   }, []);
 
   if (state?.loading) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (

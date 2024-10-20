@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import Arrow from "../assets/arrow.png";
+import { MyContext } from "../context";
 
 const Topbar = () => {
+  const { state, setInBluk } = useContext(MyContext);
+  const mode = state?.mode;
+
+  const onClick = () => {
+    if (mode == "2") {
+      setInBluk({ mode: "1" });
+    }
+  };
+
   return (
     <div className="top-bar">
-      <button className="remove-button-styling">
+      <button onClick={onClick} className="remove-button-styling">
         <img src={Arrow} />
       </button>
     </div>

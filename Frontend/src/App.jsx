@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Renderer from "./component/Renderer";
 
 const App = () => {
-  const [state, setState] = useState({ body: {} });
+  const [state, setState] = useState({ mode: "2", body: {} });
 
   const setInBluk = (obj) => setState((prev) => ({ ...prev, ...obj }));
 
