@@ -14,30 +14,33 @@ const Scheduler = () => {
     setInBluk({ loading: true });
     try {
       const data = await axios.get("http://localhost:8080/api/therapists");
-      console.log("data", data);
 
-      const therapistData = data.data;
-      let appointments = [];
-
-      if (Array.isArray(therapistData)) {
-        const appointmentsRes = await axios.get(
-          `http://localhost:8080/api/therapists/${therapistData[0]?.id}/appointments`
-        );
-
-        if (
-          appointmentsRes.status === 200 &&
-          Array.isArray(appointmentsRes?.data)
-        ) {
-          appointments = appointmentsRes?.data;
-        }
-      }
-
-      setInBluk({ therapist: data.data, appointments });
+      setInBluk({ therapist: data.data });
     } catch (error) {
       setInBluk({ therapist: [] });
     }
 
     setInBluk({ loading: false });
+  };
+
+  const selectTherapist = async (id) => {
+    const appointmentsRes = await axios.get(
+      `http://localhost:8080/api/therapists/${id}/appointments`
+    );
+
+    if (
+      appointmentsRes.status === 200 &&
+      Array.isArray(appointmentsRes?.data)
+    ) {
+      const appointments = appointmentsRes?.data;
+
+      setInBluk({
+        appointments,
+        body: { ...(state?.body ?? {}), therapistId: id },
+        selectedDate: undefined,
+        selectedTime: undefined,
+      });
+    }
   };
 
   useEffect(() => {
@@ -58,8 +61,13 @@ const Scheduler = () => {
             {state?.therapist?.map((data) => {
               return (
                 <button
-                  className="remove-button-styling therapist-btn"
+                  className={`remove-button-styling therapist-btn ${
+                    state?.body?.therapistId === data?.id
+                      ? "therapist-btn-active"
+                      : ""
+                  }`}
                   key={data?.id}
+                  onClick={() => selectTherapist(data?.id)}
                 >
                   <img src={Therapist} />
                   <span className="dr-data">
@@ -71,9 +79,13 @@ const Scheduler = () => {
             })}
           </div>
 
-          <SchedulingDetail />
+          {state?.body?.therapistId !== undefined ? (
+            <React.Fragment key={state?.body?.therapistId}>
+              <SchedulingDetail />
 
-          <SelectADate />
+              <SelectADate />
+            </React.Fragment>
+          ) : null}
         </>
       ) : (
         <h2 className="schedule-heading no-data">

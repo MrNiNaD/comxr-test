@@ -448,3 +448,7 @@ html {
 .list-value {
   font-weight: 700;
 }
+
+.therapist-btn-active {
+  outline: 2px solid var(--primary);
+}

@@ -11,12 +11,6 @@ import { MyContext } from "../context";
 const BookAppointment = () => {
   const { setInBluk } = useContext(MyContext);
 
-  try {
-    appointmentArr = Object.keys(currentAppointment);
-  } catch (error) {
-    appointmentArr = [];
-  }
-
   const onEdit = () => {
     setInBluk({ mode: "1" });
   };
@@ -29,7 +23,7 @@ const BookAppointment = () => {
       </h2>
 
       <div className="card">
-        <button className="remove-button-styling edit-cta">
+        <button onClick={onEdit} className="remove-button-styling edit-cta">
           <img src={Icon2} />
         </button>
 
@@ -72,11 +66,11 @@ const BookAppointment = () => {
         </ul>
       </div>
 
-      <div class="each-field">
-        <label class="label-style">Complete Your Address to proceed:</label>
+      <div className="each-field">
+        <label className="label-style">Complete Your Address to proceed:</label>
         <textarea
           placeholder="Enter Address"
-          class="field-style text-area-style"
+          className="field-style text-area-style"
           rows="4"
           cols="50"
         ></textarea>

@@ -79,7 +79,7 @@ const SelectADate = () => {
         <h3 className="select-therepist time-title">Time</h3>
         {appointmentArr.map((tab) =>
           !!currentAppointment?.[tab]?.length ? (
-            <>
+            <React.Fragment key={tab}>
               <h4 className="day-section-title">{tab}</h4>
 
               <div className="time-btn-container">
@@ -89,7 +89,7 @@ const SelectADate = () => {
                   </button>
                 ))}
               </div>
-            </>
+            </React.Fragment>
           ) : null
         )}
 
