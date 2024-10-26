@@ -452,3 +452,8 @@ html {
 .therapist-btn-active {
   outline: 2px solid var(--primary);
 }
+
+.avalability-detail-active {
+  color: #fff;
+  background: var(--primary);
+}

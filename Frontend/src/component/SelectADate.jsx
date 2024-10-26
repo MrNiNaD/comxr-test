@@ -25,8 +25,6 @@ const SelectADate = () => {
     setInBluk({ mode: "3" });
   };
 
-  console.log("appointmentArr", appointmentArr, currentAppointment);
-
   useEffect(() => {
     const result = getNextSixWeekdays();
     const appoinmentsObj = {};
@@ -63,9 +61,18 @@ const SelectADate = () => {
                 <button
                   className="remove-button-styling days-btn"
                   htmlFor={dateToString}
+                  onClick={() =>
+                    setInBluk({ selectedDate: date, selectedTime: undefined })
+                  }
                 >
                   <span className="day-name">{getShortDayName(date)}</span>
-                  <span className="avalability-detail">
+                  <span
+                    className={`avalability-detail ${
+                      state?.selectedDate?.toString() === dateToString
+                        ? "avalability-detail-active"
+                        : ""
+                    }`}
+                  >
                     <span className="respec-date">{formatDate(date)}</span>
                     <br />
                     <span className="availablity">Availability</span>
@@ -76,34 +83,49 @@ const SelectADate = () => {
           })}
         </div>
 
-        <h3 className="select-therepist time-title">Time</h3>
-        {appointmentArr.map((tab) =>
-          !!currentAppointment?.[tab]?.length ? (
-            <React.Fragment key={tab}>
-              <h4 className="day-section-title">{tab}</h4>
+        {!!state?.selectedDate ? (
+          <>
+            <h3 className="select-therepist time-title">Time</h3>
+            {appointmentArr.map((tab) =>
+              !!currentAppointment?.[tab]?.length ? (
+                <React.Fragment key={tab}>
+                  <h4 className="day-section-title">{tab}</h4>
 
-              <div className="time-btn-container">
-                {currentAppointment?.[tab]?.map((dateDetail) => (
-                  <button className="remove-button-styling time-btn">
-                    {dateDetail?.formattedTime}
-                  </button>
-                ))}
-              </div>
-            </React.Fragment>
-          ) : null
-        )}
+                  <div className="time-btn-container">
+                    {currentAppointment?.[tab]?.map((dateDetail) => (
+                      <button
+                        onClick={() =>
+                          setInBluk({ selectedTime: dateDetail?.formattedTime })
+                        }
+                        className={`remove-button-styling time-btn ${
+                          state?.selectedTime === dateDetail?.formattedTime
+                            ? "avalability-detail-active"
+                            : ""
+                        }`}
+                      >
+                        {dateDetail?.formattedTime}
+                      </button>
+                    ))}
+                  </div>
+                </React.Fragment>
+              ) : null
+            )}
 
-        {!currentAppointment?.Morning?.length &&
-          !currentAppointment?.Noon?.length &&
-          !currentAppointment?.Evening?.length && (
-            <h2 className="schedule-heading no-data">
-              <span>No Data Found</span>
-            </h2>
-          )}
+            {!currentAppointment?.Morning?.length &&
+              !currentAppointment?.Noon?.length &&
+              !currentAppointment?.Evening?.length && (
+                <h2 className="schedule-heading no-data">
+                  <span>No Data Found</span>
+                </h2>
+              )}
+          </>
+        ) : null}
 
-        <button onClick={onSubmit} className="btn-style shedule-btn">
-          Proceed
-        </button>
+        {!!state?.selectedTime ? (
+          <button onClick={onSubmit} className="btn-style shedule-btn">
+            Proceed
+          </button>
+        ) : null}
       </div>
     </>
   );
