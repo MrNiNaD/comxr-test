@@ -5,9 +5,10 @@ import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import Renderer from "./component/Renderer";
+import { cities } from "./constant";
 
 const App = () => {
-  const [state, setState] = useState({ mode: "2", body: {} });
+  const [state, setState] = useState({ mode: "1", body: { city: cities[0] } });
 
   const setInBluk = (obj) => setState((prev) => ({ ...prev, ...obj }));
 

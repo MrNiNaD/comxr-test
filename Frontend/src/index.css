@@ -112,8 +112,8 @@ html {
   border-radius: 4px;
   padding: 10px;
   width: 100%;
-  max-width: 95%;
   display: block;
+  box-sizing: border-box;
 }
 
 .btn-style {
@@ -228,4 +228,12 @@ html {
 .no-data {
   margin: 10px 0;
   text-align: center;
+}
+
+.select-style {
+  max-width: 100%;
+}
+
+.select-div {
+  position: relative;
 }

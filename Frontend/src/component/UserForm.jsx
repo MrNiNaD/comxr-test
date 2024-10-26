@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Hero from "../assets/hero.jpg";
 import { MyContext } from "../context";
 import { toast } from "react-toastify";
+import { cities } from "../constant";
 
 const UserForm = () => {
   const { state, setState } = useContext(MyContext);
@@ -49,12 +50,27 @@ const UserForm = () => {
             return (
               <div className="each-field" key={eachConfig?.key}>
                 <label className="label-style">{eachConfig?.label}</label>
-                <input
-                  onChange={fieldChange}
-                  className="field-style"
-                  name={eachConfig?.key}
-                  value={state?.body?.[eachConfig?.key] ?? ""}
-                />
+                {eachConfig?.key === "city" ? (
+                  <div className="select-div">
+                    <select
+                      onChange={fieldChange}
+                      className="field-style select-style"
+                      name={eachConfig?.key}
+                      value={state?.body?.[eachConfig?.key] ?? ""}
+                    >
+                      {cities.map((city) => (
+                        <option key={city}>{city}</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <input
+                    onChange={fieldChange}
+                    className="field-style"
+                    name={eachConfig?.key}
+                    value={state?.body?.[eachConfig?.key] ?? ""}
+                  />
+                )}
               </div>
             );
           })}
