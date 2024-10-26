@@ -5,6 +5,7 @@ import Therapist from "../assets/therapist.png";
 import Loader from "./Loader";
 import SchedulerTop from "./SchedulerTop";
 import SchedulingDetail from "./SchedulingDetail";
+import SelectADate from "./SelectADate";
 
 const Scheduler = () => {
   const { state, setInBluk } = useContext(MyContext);
@@ -13,8 +14,25 @@ const Scheduler = () => {
     setInBluk({ loading: true });
     try {
       const data = await axios.get("http://localhost:8080/api/therapists");
+      console.log("data", data);
 
-      setInBluk({ therapist: data.data });
+      const therapistData = data.data;
+      let appointments = [];
+
+      if (Array.isArray(therapistData)) {
+        const appointmentsRes = await axios.get(
+          `http://localhost:8080/api/therapists/${therapistData[0]?.id}/appointments`
+        );
+
+        if (
+          appointmentsRes.status === 200 &&
+          Array.isArray(appointmentsRes?.data)
+        ) {
+          appointments = appointmentsRes?.data;
+        }
+      }
+
+      setInBluk({ therapist: data.data, appointments });
     } catch (error) {
       setInBluk({ therapist: [] });
     }
@@ -55,7 +73,7 @@ const Scheduler = () => {
 
           <SchedulingDetail />
 
-          <h3 className="select-therepist">Select A Date</h3>
+          <SelectADate />
         </>
       ) : (
         <h2 className="schedule-heading no-data">

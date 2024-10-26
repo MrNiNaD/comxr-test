@@ -246,3 +246,10 @@ html {
   pointer-events: none;
   transform: translateY(-50%);
 }
+
+.remove-from-viewport {
+  display: block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
