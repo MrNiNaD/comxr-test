@@ -11,7 +11,7 @@ const SchedulerTop = () => {
         <span className="about-physica">About Physica</span>
         <span className="choose-therapist">Choose Therapist &gt;</span>
       </h3>
-      <p>
+      <p className="schedule-desc">
         Our professional doctors will visit your home for an 40 minute treatment
         session for your rehabilitation needs. <a href="#">Read More</a>
       </p>
