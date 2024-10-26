@@ -94,6 +94,7 @@ const SelectADate = () => {
                   <div className="time-btn-container">
                     {currentAppointment?.[tab]?.map((dateDetail) => (
                       <button
+                        key={dateDetail?.formattedTime}
                         onClick={() =>
                           setInBluk({ selectedTime: dateDetail?.formattedTime })
                         }

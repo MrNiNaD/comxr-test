@@ -119,3 +119,53 @@ export function getTimeSlotsByPeriodV2(date, appointments) {
 
   return periods;
 }
+
+export function formatDateToLongString(date) {
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const day = date.getDate();
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}
+
+export function formatDateTime(date, time) {
+  // Parse the time string (e.g., "09:00 AM")
+  const [timePart, period] = time.split(" ");
+  let [hours, minutes] = timePart.split(":").map(Number);
+
+  // Adjust hours based on AM/PM
+  if (period === "PM" && hours !== 12) hours += 12;
+  if (period === "AM" && hours === 12) hours = 0;
+
+  // Set hours and minutes to the date
+  date.setHours(hours, minutes, 0, 0);
+
+  // Format date and time as "YYYY-MM-DD HH:MM:SS"
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+  const formattedHours = String(date.getHours()).padStart(2, "0");
+  const formattedMinutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = "00"; // Assuming seconds as "00"
+
+  return `${year}-${month}-${day} ${formattedHours}:${formattedMinutes}:${seconds}`;
+}
+
+export function getCurrentDateTimeFormatted() {
+  const date = new Date();
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
