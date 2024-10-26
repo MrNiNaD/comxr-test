@@ -253,3 +253,19 @@ html {
   height: 0;
   overflow: hidden;
 }
+
+.schedule-sub-heading {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-physica {
+  font-size: 18px;
+}
+
+.choose-therapist {
+  font-size: 10px;
+  color: var(--primary);
+}
