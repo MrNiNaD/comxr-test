@@ -10,6 +10,10 @@ const Topbar = () => {
     if (mode == "2") {
       setInBluk({ mode: "1" });
     }
+
+    if (mode == "3") {
+      setInBluk({ mode: "2" });
+    }
   };
 
   return (
