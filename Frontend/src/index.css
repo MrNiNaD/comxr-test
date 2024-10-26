@@ -232,8 +232,17 @@ html {
 
 .select-style {
   max-width: 100%;
+  appearance: none;
 }
 
 .select-div {
   position: relative;
+}
+
+.icon-svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  pointer-events: none;
+  transform: translateY(-50%);
 }

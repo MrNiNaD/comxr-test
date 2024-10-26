@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Hero from "../assets/hero.jpg";
+import DownArrow from "../assets/Icon.png";
 import { MyContext } from "../context";
 import { toast } from "react-toastify";
 import { cities } from "../constant";
@@ -62,6 +63,7 @@ const UserForm = () => {
                         <option key={city}>{city}</option>
                       ))}
                     </select>
+                    <img className="icon-svg" src={DownArrow} />
                   </div>
                 ) : (
                   <input
