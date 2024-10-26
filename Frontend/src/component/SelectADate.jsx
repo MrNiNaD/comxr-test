@@ -21,6 +21,10 @@ const SelectADate = () => {
     appointmentArr = [];
   }
 
+  const onSubmit = () => {
+    setInBluk({ mode: "3" });
+  };
+
   console.log("appointmentArr", appointmentArr, currentAppointment);
 
   useEffect(() => {
@@ -50,32 +54,41 @@ const SelectADate = () => {
       <h3 className="select-therepist">Select A Date</h3>
 
       <div>
-        {dates?.map((date) => {
-          const dateToString = date.toString();
+        <div className="days-list">
+          {dates?.map((date) => {
+            const dateToString = date.toString();
 
-          return (
-            <React.Fragment key={dateToString}>
-              <button className="remove-button-styling" htmlFor={dateToString}>
-                <span className="day-name">{getShortDayName(date)}</span>
-                <span className="avalability-detail">
-                  <span className="respec-date">{formatDate(date)}</span>
-                  <span className="availablity">Availability</span>
-                </span>
-              </button>
-            </React.Fragment>
-          );
-        })}
+            return (
+              <React.Fragment key={dateToString}>
+                <button
+                  className="remove-button-styling days-btn"
+                  htmlFor={dateToString}
+                >
+                  <span className="day-name">{getShortDayName(date)}</span>
+                  <span className="avalability-detail">
+                    <span className="respec-date">{formatDate(date)}</span>
+                    <br />
+                    <span className="availablity">Availability</span>
+                  </span>
+                </button>
+              </React.Fragment>
+            );
+          })}
+        </div>
 
+        <h3 className="select-therepist time-title">Time</h3>
         {appointmentArr.map((tab) =>
           !!currentAppointment?.[tab]?.length ? (
             <>
-              <h4>{tab}</h4>
+              <h4 className="day-section-title">{tab}</h4>
 
-              {currentAppointment?.[tab]?.map((dateDetail) => (
-                <button className="remove-button-styling">
-                  {dateDetail?.formattedTime}
-                </button>
-              ))}
+              <div className="time-btn-container">
+                {currentAppointment?.[tab]?.map((dateDetail) => (
+                  <button className="remove-button-styling time-btn">
+                    {dateDetail?.formattedTime}
+                  </button>
+                ))}
+              </div>
             </>
           ) : null
         )}
@@ -88,7 +101,7 @@ const SelectADate = () => {
             </h2>
           )}
 
-        <button onClick={() => {}} className="btn-style">
+        <button onClick={onSubmit} className="btn-style shedule-btn">
           Proceed
         </button>
       </div>
