@@ -33,3 +33,5 @@ export const cities = [
   "Palghar",
   "Sindhudurg"
 ]
+
+export const initialSate = { mode: "1", body: { city: cities[0] } };

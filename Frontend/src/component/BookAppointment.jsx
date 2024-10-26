@@ -7,11 +7,18 @@ import Icon5 from "../assets/material-symbols_calendar-month-outline-rounded.png
 import Icon6 from "../assets/MobileOutlined.png";
 import Icon7 from "../assets/UserOutlined.png";
 import { MyContext } from "../context";
-import { formatDateTime, formatDateToLongString } from "../utils";
+import {
+  formatDateTime,
+  formatDateToLongString,
+  getCurrentDateTimeFormatted,
+} from "../utils";
+import { toast } from "react-toastify";
+import { initialSate } from "../constant";
+import axios from "axios";
 
 const BookAppointment = () => {
-  const { state, setInBluk, setInBody } = useContext(MyContext);
-  console.log("state", state);
+  const { state, setInBluk, setInBody, setState } = useContext(MyContext);
+
   const therapist = state?.therapist;
   const therapistId = state?.body?.therapistId;
   const selectedTherapist = Array.isArray(therapist)
@@ -20,6 +27,19 @@ const BookAppointment = () => {
 
   const onEdit = () => {
     setInBluk({ mode: "1" });
+  };
+
+  const onConfirm = async () => {
+    axios
+      .post("http://localhost:8080/api/appointments", {
+        ...state?.body,
+        bookingTime: getCurrentDateTimeFormatted(),
+        slotTime: formatDateTime(state?.selectedDate, state?.selectedTime),
+      })
+      .then(() => {
+        toast.success("Form Successfully Submited");
+        setState(initialSate);
+      });
   };
 
   return (
@@ -59,7 +79,7 @@ const BookAppointment = () => {
             <img src={Icon5} />
             <span className="list-label">Date:</span>
             <span className="list-value">
-              {formatDateToLongString(state?.selectedDate)}
+              {formatDateToLongString(state?.selectedDate ?? new Date())}
             </span>
           </li>
           <li>
@@ -87,7 +107,7 @@ const BookAppointment = () => {
         ></textarea>
       </div>
 
-      <button onClick={onEdit} className="btn-style shedule-btn">
+      <button onClick={onConfirm} className="btn-style shedule-btn">
         Confirm Appointment
       </button>
     </div>
