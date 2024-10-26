@@ -12,7 +12,7 @@ const SelectADate = () => {
   const dates = state.dates;
   const appointments = state.appointments;
   const appoinmentsObj = state.appoinmentsObj;
-  const currentAppointment = appoinmentsObj?.[dates[0]];
+  const currentAppointment = appoinmentsObj?.[state?.selectedDate];
   let appointmentArr;
 
   try {
